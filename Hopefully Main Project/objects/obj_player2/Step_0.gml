@@ -7,9 +7,9 @@ if(key_left) || (key_right) || (key_jump){
 	controller = 0;
 }
 
-if(abs(gamepad_axis_value(0, gp_axislh)) > 0.2){
-	key_left = abs(min(gamepad_axis_value(0, gp_axislh), 0));
-	key_right = max(gamepad_axis_value(0, gp_axislh), 0);
+if(abs(gamepad_axis_value(1, gp_axislh)) > 0.2){
+	key_left = abs(min(gamepad_axis_value(1, gp_axislh), 0));
+	key_right = max(gamepad_axis_value(1, gp_axislh), 0);
 	controller = 1;
 }
 
@@ -22,13 +22,18 @@ vsp = vsp + grv;
 
 if(place_meeting(x, y+1, obj_stone)) && (key_jump){
 	vsp = -8;
+	jump++;
 	while(!place_meeting(x, y+1, obj_stone)) {
 		hsp = hsp;
 		vsp = vsp;
+		if(jump == 1 && (key_jump)){
+			vsp = -8;	
+		}
 	}
+	jump = 0;
 }
 
-if(place_meeting(x, y+1, obj_stone)) && (gamepad_button_check_pressed(0, gp_face1)){
+if(place_meeting(x, y+1, obj_stone)) && (gamepad_button_check_pressed(1, gp_face1)){
 	vsp = -8;
 	while(!place_meeting(x, y+1, obj_stone)) {
 		hsp = hsp;
@@ -41,7 +46,7 @@ if(!place_meeting(x, y+1, obj_stone)) && (key_jump) && (jump == 0){
 	jump = 1;
 }
 
-if(!place_meeting(x, y+1, obj_stone)) && (gamepad_button_check_pressed(0, gp_face1)) && (jump == 0){
+if(!place_meeting(x, y+1, obj_stone)) && (gamepad_button_check_pressed(1, gp_face1)) && (jump == 0){
 	vsp = -8;
 	jump = 1;
 }
